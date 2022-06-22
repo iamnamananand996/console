@@ -1,11 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("should create new destination", async ({ page }) => {
-  if (!process.env.NEXT_PUBLIC_MAIN_URL) {
-    throw new Error("env not found");
-  }
-
-  await page.goto(`${process.env.NEXT_PUBLIC_MAIN_URL}/destinations/create`);
+  await page.goto("/destinations/create");
 
   // Select destination type
   await page.locator("#destinationDefinition").click({ force: true });
@@ -13,7 +9,6 @@ test("should create new destination", async ({ page }) => {
 
   // Create the destination
   await page.locator("text=Set up destination").click();
-  await page.waitForNavigation();
 
   expect(page.url()).toBe(`${process.env.NEXT_PUBLIC_MAIN_URL}/destinations`);
   await expect(
@@ -22,11 +17,7 @@ test("should create new destination", async ({ page }) => {
 });
 
 test("should navigate to destination details page", async ({ page }) => {
-  if (!process.env.NEXT_PUBLIC_MAIN_URL) {
-    throw new Error("env not found");
-  }
-
-  await page.goto(`${process.env.NEXT_PUBLIC_MAIN_URL}/destinations`);
+  await page.goto("/destinations");
   await page.locator("h3", { hasText: "destination-grpc" }).click();
 
   expect(page.url()).toBe(
