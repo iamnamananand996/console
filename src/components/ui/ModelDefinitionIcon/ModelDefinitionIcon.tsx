@@ -53,7 +53,7 @@ const ModelDefinitionIcon: FC<ModelDefinitionIconProps> = ({
     }
 
     default: {
-      return <div>icon not found</div>;
+      return <></>;
     }
   }
 };
