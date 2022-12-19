@@ -15,11 +15,12 @@ const useSourceWithPipelines = (sourceName: Nullable<string>) => {
         return Promise.reject(new Error("invalid source name"));
       }
 
-      if (!source.data) {
+      if (source.isError || !source.data) {
+        console.log("hi error");
         return Promise.reject(new Error("invalid source data"));
       }
 
-      if (!pipelines.data) {
+      if (pipelines.isError || !pipelines.data) {
         return Promise.reject(new Error("invalid pipeline data"));
       }
 

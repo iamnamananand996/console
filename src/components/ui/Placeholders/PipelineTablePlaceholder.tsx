@@ -1,17 +1,18 @@
 import { FC } from "react";
-import TablePlaceholderBase, {
-  TablePlaceholderBaseProps,
-} from "../TablePlaceholderBase";
+import {
+  ResourcePlaceholderBase,
+  ResourcePlaceholderBaseProps,
+} from "./ResourcePlaceholderBase";
 import cn from "clsx";
 
 export type PipelineTablePlaceholderProps = {
-  marginBottom: TablePlaceholderBaseProps["marginBottom"];
-  enablePlaceholderCreateButton: TablePlaceholderBaseProps["enableCreateButton"];
+  marginBottom: ResourcePlaceholderBaseProps["marginBottom"];
+  enablePlaceholderCta: ResourcePlaceholderBaseProps["enableCta"];
 };
 
-const PipelineTablePlaceholder: FC<PipelineTablePlaceholderProps> = ({
+export const PipelineTablePlaceholder: FC<PipelineTablePlaceholderProps> = ({
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }) => {
   const width = "w-[136px]";
   const height = "h-[136px]";
@@ -267,15 +268,13 @@ const PipelineTablePlaceholder: FC<PipelineTablePlaceholderProps> = ({
   ];
 
   return (
-    <TablePlaceholderBase
+    <ResourcePlaceholderBase
       placeholderItems={placeholderItems}
       placeholderTitle="No pipeline"
-      createButtonLink="/pipelines/create"
-      createButtonTitle="Set up your first pipeline"
+      ctaLink="/pipelines/create"
+      ctaTitle="Set up your first pipeline"
       marginBottom={marginBottom}
-      enableCreateButton={enablePlaceholderCreateButton}
+      enableCta={enablePlaceholderCta}
     />
   );
 };
-
-export default PipelineTablePlaceholder;

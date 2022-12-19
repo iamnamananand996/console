@@ -2,32 +2,31 @@ import { Fragment, ReactElement } from "react";
 import { useRouter } from "next/router";
 import cn from "clsx";
 import { SolidButton } from "@instill-ai/design-system";
-
 import { Nullable } from "@/types/general";
 
-export type TablePlaceholderBaseProps = {
+export type ResourcePlaceholderBaseProps = {
   placeholderItems: {
     id: string;
     item: ReactElement;
   }[];
   placeholderTitle: string;
-  createButtonTitle: string;
-  createButtonLink: string;
+  ctaTitle: string;
+  ctaLink: string;
   marginBottom: Nullable<string>;
-  enableCreateButton: boolean;
+  enableCta: boolean;
 };
 
-const TablePlaceholderBase = ({
+export const ResourcePlaceholderBase = ({
   placeholderItems,
   placeholderTitle,
-  createButtonTitle,
-  createButtonLink,
+  ctaTitle,
+  ctaLink,
   marginBottom,
-  enableCreateButton,
-}: TablePlaceholderBaseProps) => {
+  enableCta,
+}: ResourcePlaceholderBaseProps) => {
   const router = useRouter();
   const handleOnClick = () => {
-    router.push(createButtonLink);
+    router.push(ctaLink);
   };
   return (
     <div
@@ -45,7 +44,7 @@ const TablePlaceholderBase = ({
         <h3 className="text-instill-h3 text-instillGrey80">
           {placeholderTitle}
         </h3>
-        {enableCreateButton ? (
+        {enableCta ? (
           <SolidButton
             type="button"
             color="primary"
@@ -53,12 +52,10 @@ const TablePlaceholderBase = ({
             onClickHandler={handleOnClick}
             position={null}
           >
-            {createButtonTitle}
+            {ctaTitle}
           </SolidButton>
         ) : null}
       </div>
     </div>
   );
 };
-
-export default TablePlaceholderBase;

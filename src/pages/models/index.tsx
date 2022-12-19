@@ -67,7 +67,7 @@ const ModelPage: FC & {
           models={modelsWithInstances.isSuccess ? modelsWithInstances.data : []}
           isLoading={isLoading}
           marginBottom={null}
-          enablePlaceholderCreateButton={true}
+          enablePlaceholderCta={true}
         />
       </PageContentContainer>
     </>

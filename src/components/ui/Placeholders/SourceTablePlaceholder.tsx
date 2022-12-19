@@ -6,18 +6,19 @@ import {
   MongoDbAtalasIcon,
 } from "@instill-ai/design-system";
 import { FC } from "react";
-import TablePlaceholderBase, {
-  TablePlaceholderBaseProps,
-} from "../TablePlaceholderBase";
+import {
+  ResourcePlaceholderBase,
+  ResourcePlaceholderBaseProps,
+} from "./ResourcePlaceholderBase";
 
 export type SourceTablePlaceholderProps = {
-  marginBottom: TablePlaceholderBaseProps["marginBottom"];
-  enablePlaceholderCreateButton: TablePlaceholderBaseProps["enableCreateButton"];
+  marginBottom: ResourcePlaceholderBaseProps["marginBottom"];
+  enablePlaceholderCta: ResourcePlaceholderBaseProps["enableCta"];
 };
 
-const SourceTablePlaceholder: FC<SourceTablePlaceholderProps> = ({
+export const SourceTablePlaceholder: FC<SourceTablePlaceholderProps> = ({
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }) => {
   const width = "w-[136px]";
   const height = "h-[136px]";
@@ -54,15 +55,13 @@ const SourceTablePlaceholder: FC<SourceTablePlaceholderProps> = ({
   ];
 
   return (
-    <TablePlaceholderBase
+    <ResourcePlaceholderBase
       placeholderItems={placeholderItems}
       placeholderTitle="No source"
-      createButtonTitle="Set up your first source"
-      createButtonLink="/sources/create"
+      ctaTitle="Set up your first source"
+      ctaLink="/sources/create"
       marginBottom={marginBottom}
-      enableCreateButton={enablePlaceholderCreateButton}
+      enableCta={enablePlaceholderCta}
     />
   );
 };
-
-export default SourceTablePlaceholder;

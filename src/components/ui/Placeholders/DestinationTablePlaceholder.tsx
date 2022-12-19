@@ -7,19 +7,19 @@ import {
   SnowflakeIcon,
 } from "@instill-ai/design-system";
 import { FC } from "react";
-import TablePlaceholderBase, {
-  TablePlaceholderBaseProps,
-} from "../TablePlaceholderBase";
+import {
+  ResourcePlaceholderBase,
+  ResourcePlaceholderBaseProps,
+} from "./ResourcePlaceholderBase";
 
 export type DestinationTablePlaceholderProps = {
-  marginBottom: TablePlaceholderBaseProps["marginBottom"];
-  enablePlaceholderCreateButton: TablePlaceholderBaseProps["enableCreateButton"];
+  marginBottom: ResourcePlaceholderBaseProps["marginBottom"];
+  enablePlaceholderCta: ResourcePlaceholderBaseProps["enableCta"];
 };
 
-const DestinationTablePlaceholder: FC<DestinationTablePlaceholderProps> = ({
-  marginBottom,
-  enablePlaceholderCreateButton,
-}) => {
+export const DestinationTablePlaceholder: FC<
+  DestinationTablePlaceholderProps
+> = ({ marginBottom, enablePlaceholderCta }) => {
   const width = "w-[136px]";
   const height = "h-[136px]";
 
@@ -51,15 +51,13 @@ const DestinationTablePlaceholder: FC<DestinationTablePlaceholderProps> = ({
   ];
 
   return (
-    <TablePlaceholderBase
+    <ResourcePlaceholderBase
       placeholderItems={placeholderItems}
       placeholderTitle="No destination"
-      createButtonTitle="Set up your first destination"
-      createButtonLink="/destinations/create"
+      ctaTitle="Set up your first destination"
+      ctaLink="/destinations/create"
       marginBottom={marginBottom}
-      enableCreateButton={enablePlaceholderCreateButton}
+      enableCta={enablePlaceholderCta}
     />
   );
 };
-
-export default DestinationTablePlaceholder;

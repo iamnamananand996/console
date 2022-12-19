@@ -66,7 +66,7 @@ const DestinationPage: FC & {
         <DestinationsTable
           destinations={destinations.data ? destinations.data : []}
           isLoading={isLoading}
-          enablePlaceholderCreateButton={true}
+          enablePlaceholderCta={true}
           marginBottom={null}
         />
       </PageContentContainer>

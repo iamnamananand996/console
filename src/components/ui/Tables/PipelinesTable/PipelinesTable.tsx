@@ -24,14 +24,14 @@ export type PipelinesTableProps = {
   isLoadingPipeline: boolean;
   pipelines: Pipeline[];
   marginBottom: Nullable<string>;
-  enablePlaceholderCreateButton: PipelineTablePlaceholderProps["enablePlaceholderCreateButton"];
+  enablePlaceholderCta: PipelineTablePlaceholderProps["enablePlaceholderCta"];
 };
 
 const PipelinesTable: FC<PipelinesTableProps> = ({
   isLoadingPipeline,
   pipelines,
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }) => {
   const stateOverviewCounts = useStateOverviewCounts(
     isLoadingPipeline ? null : pipelines
@@ -76,7 +76,7 @@ const PipelinesTable: FC<PipelinesTableProps> = ({
     return (
       <PipelineTablePlaceholder
         marginBottom={marginBottom}
-        enablePlaceholderCreateButton={enablePlaceholderCreateButton}
+        enablePlaceholderCta={enablePlaceholderCta}
       />
     );
   }

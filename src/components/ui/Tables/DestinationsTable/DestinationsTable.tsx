@@ -22,14 +22,14 @@ export type DestinationsTableProps = {
   destinations: DestinationWithPipelines[];
   isLoading: boolean;
   marginBottom: Nullable<string>;
-  enablePlaceholderCreateButton: DestinationTablePlaceholderProps["enablePlaceholderCreateButton"];
+  enablePlaceholderCta: DestinationTablePlaceholderProps["enablePlaceholderCta"];
 };
 
 const DestinationsTable: FC<DestinationsTableProps> = ({
   destinations,
   isLoading,
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }) => {
   const stateOverviewCounts = useStateOverviewCounts(
     isLoading ? null : destinations
@@ -65,7 +65,7 @@ const DestinationsTable: FC<DestinationsTableProps> = ({
   if (destinations.length === 0) {
     return (
       <DestinationTablePlaceholder
-        enablePlaceholderCreateButton={enablePlaceholderCreateButton}
+        enablePlaceholderCta={enablePlaceholderCta}
         marginBottom={marginBottom}
       />
     );

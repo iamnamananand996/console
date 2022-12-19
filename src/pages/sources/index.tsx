@@ -63,7 +63,7 @@ const SourcePage: FC & {
           sources={sources.data ? sources.data : []}
           isLoadingSources={isLoading}
           marginBottom={null}
-          enablePlaceholderCreateButton={true}
+          enablePlaceholderCta={true}
         />
       </PageContentContainer>
     </>

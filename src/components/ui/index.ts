@@ -101,6 +101,6 @@ export type {
 };
 
 export * from "./TableCells";
-export * from "./TablePlaceholders";
+export * from "./Placeholders";
 export * from "./Tables";
 export * from "./Modals";

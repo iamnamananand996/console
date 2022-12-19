@@ -7,18 +7,19 @@ import {
   SemanticSegmentationIcon,
 } from "@instill-ai/design-system";
 import { FC } from "react";
-import TablePlaceholderBase, {
-  TablePlaceholderBaseProps,
-} from "../TablePlaceholderBase";
+import {
+  ResourcePlaceholderBase,
+  ResourcePlaceholderBaseProps,
+} from "./ResourcePlaceholderBase";
 
 export type ModelTablePlaceholderProps = {
-  marginBottom: TablePlaceholderBaseProps["marginBottom"];
-  enablePlaceholderCreateButton: TablePlaceholderBaseProps["enableCreateButton"];
+  marginBottom: ResourcePlaceholderBaseProps["marginBottom"];
+  enablePlaceholderCta: ResourcePlaceholderBaseProps["enableCta"];
 };
 
-const ModelTablePlaceholder: FC<ModelTablePlaceholderProps> = ({
+export const ModelTablePlaceholder: FC<ModelTablePlaceholderProps> = ({
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }) => {
   const width = "w-[136px]";
   const height = "h-[136px]";
@@ -83,15 +84,13 @@ const ModelTablePlaceholder: FC<ModelTablePlaceholderProps> = ({
   ];
 
   return (
-    <TablePlaceholderBase
+    <ResourcePlaceholderBase
       placeholderItems={placeholderItems}
       placeholderTitle="No model"
-      createButtonTitle="Set up your first model"
-      createButtonLink="/models/create"
+      ctaTitle="Set up your first model"
+      ctaLink="/models/create"
       marginBottom={marginBottom}
-      enableCreateButton={enablePlaceholderCreateButton}
+      enableCta={enablePlaceholderCta}
     />
   );
 };
-
-export default ModelTablePlaceholder;

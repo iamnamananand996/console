@@ -59,7 +59,7 @@ const PipelinePage: FC & {
           pipelines={pipelines.data ? pipelines.data : []}
           isLoadingPipeline={pipelines.isLoading}
           marginBottom={null}
-          enablePlaceholderCreateButton={true}
+          enablePlaceholderCta={true}
         />
       </PageContentContainer>
     </>

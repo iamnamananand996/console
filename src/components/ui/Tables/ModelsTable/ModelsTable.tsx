@@ -20,14 +20,14 @@ export type ModelsTableProps = {
   models: ModelWithInstance[];
   isLoading: boolean;
   marginBottom: Nullable<string>;
-  enablePlaceholderCreateButton: ModelTablePlaceholderProps["enablePlaceholderCreateButton"];
+  enablePlaceholderCta: ModelTablePlaceholderProps["enablePlaceholderCta"];
 };
 
 const ModelsTable: FC<ModelsTableProps> = ({
   models,
   isLoading,
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }) => {
   const tableHeadItems = useMemo<TableHeadItem[]>(() => {
     return [
@@ -54,7 +54,7 @@ const ModelsTable: FC<ModelsTableProps> = ({
     return (
       <ModelTablePlaceholder
         marginBottom={marginBottom}
-        enablePlaceholderCreateButton={enablePlaceholderCreateButton}
+        enablePlaceholderCta={enablePlaceholderCta}
       />
     );
   }

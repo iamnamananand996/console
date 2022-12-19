@@ -22,14 +22,14 @@ export type SourcesTableProps = {
   sources: SourceWithPipelines[];
   isLoadingSources: boolean;
   marginBottom: Nullable<string>;
-  enablePlaceholderCreateButton: SourceTablePlaceholderProps["enablePlaceholderCreateButton"];
+  enablePlaceholderCta: SourceTablePlaceholderProps["enablePlaceholderCta"];
 };
 
 const SourcesTable = ({
   sources,
   isLoadingSources,
   marginBottom,
-  enablePlaceholderCreateButton,
+  enablePlaceholderCta,
 }: SourcesTableProps) => {
   const stateOverviewCounts = useStateOverviewCounts(
     isLoadingSources ? null : sources
@@ -65,7 +65,7 @@ const SourcesTable = ({
   if (sources.length === 0) {
     return (
       <SourceTablePlaceholder
-        enablePlaceholderCreateButton={enablePlaceholderCreateButton}
+        enablePlaceholderCta={enablePlaceholderCta}
         marginBottom={marginBottom}
       />
     );
