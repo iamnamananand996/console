@@ -1,4 +1,4 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import {
@@ -35,6 +35,10 @@ const SourceDetailsPage: FC & {
     isSuccess: sourceWithPipelines.isSuccess,
     isLoading: sourceWithPipelines.isLoading,
   });
+
+  useEffect(() => {
+    console.log(sourceWithPipelines.error);
+  }, [sourceWithPipelines.error]);
 
   // ###################################################################
   // #                                                                 #
@@ -83,7 +87,7 @@ const SourceDetailsPage: FC & {
           }
           isLoadingPipeline={isLoading}
           marginBottom="mb-10"
-          enablePlaceholderCreateButton={false}
+          enablePlaceholderCta={false}
         />
         <h3 className="mb-5 text-black text-instill-h3">Setting</h3>
         {sourceWithPipelines.isSuccess && sourceWithPipelines.data ? (

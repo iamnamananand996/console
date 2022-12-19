@@ -42,6 +42,7 @@ import { usePipelines } from "@/services/pipeline";
 import { Pipeline } from "@/lib/instill";
 import { useAmplitudeCtx } from "@/contexts/AmplitudeContext";
 import { useSendAmplitudeData } from "@/hooks/useSendAmplitudeData";
+import { AxiosError } from "axios";
 
 type GetLayOutProps = {
   page: ReactElement;
@@ -58,6 +59,16 @@ const ModelDetailsPage: FC & {
   // ##########################################################################
 
   const model = useModel(id ? `models/${id}` : null);
+
+  // If model is not found, we showcase the not-found card for user
+  const [modelNotFound, setModelNotFound] = useState(false);
+  useEffect(() => {
+    if (model.error instanceof AxiosError) {
+      if (model.error.response?.status === 404) {
+        setModelNotFound(true);
+      }
+    }
+  }, [model.error]);
 
   const modelInstances = useModelInstances(
     model.isSuccess ? model.data.name : null
@@ -178,7 +189,6 @@ const ModelDetailsPage: FC & {
   // ##########################################################################
 
   const { amplitudeIsInit } = useAmplitudeCtx();
-
   useSendAmplitudeData(
     "hit_model_page",
     { type: "navigation" },
@@ -268,7 +278,7 @@ const ModelDetailsPage: FC & {
           pipelines={selectedModelInstancePipelines}
           isLoadingPipeline={pipelines.isLoading}
           marginBottom="mb-10"
-          enablePlaceholderCreateButton={false}
+          enablePlaceholderCta={false}
         />
         <h3 className="mb-5 text-black text-instill-h3">Setting</h3>
         {modelInstances.isLoading ? null : selectedModelInstances ? (
