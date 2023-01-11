@@ -125,12 +125,42 @@ __info "$(__green "\nParsing ${ENVSH_ENV}...\n")"
 while IFS= read -r line; do
   # Check if this line is a valid environment variable and matches our prefix
   if printf '%s' "$line" | grep -e "=" | grep -e "$ENVSH_PREFIX"; then
-    # Read and apply environment variable if exists
-    # NOTE: <<< here operator not working with `sh`
-    $ENVSH_CREATE_ENVJS && awk -F '=' '{print $1 ": \"" (ENVIRON[$1] ? ENVIRON[$1] : $2) "\","}' \
-      <<<"$line" >>"$ENVSH_OUTPUT"
+
+    # get the env name
+    env_name=$(echo "$line" | cut -d "=" -f 1)
+
+    # NEXT_PUBLIC_SELF_SIGNED_CA env will be reserved for below action
+    if [[ $env_name != "NEXT_PUBLIC_SELF_SIGNED_CA" ]]; then
+      # Read and apply environment variable if exists
+      # NOTE: <<< here operator not working with `sh`
+      $ENVSH_CREATE_ENVJS && awk -F '=' '{print $1 ": \"" (ENVIRON[$1] ? ENVIRON[$1] : $2) "\","}' \
+        <<<"$line" >>"$ENVSH_OUTPUT"
+    fi
+
   fi
+
 done <"$ENVSH_ENV"
+
+# add certification into __env file
+# The inlined env had already replace the ./env file so we can safely retrieve this env
+# here (But we still need to replace the var in .env below.)
+
+if [[ $NEXT_PUBLIC_SELF_SIGNED_CA_ENABLED = true ]]; then
+
+  __info "$(__green "\nParsing CA...\n")"
+
+  # Check if ca path exists
+  [[ -f "$NEXT_PUBLIC_SELF_SIGNED_CA_PATH" ]] || {
+    echo "NEXT_PUBLIC_SELF_SIGNED_CA_PATH does not exist"
+    exit 1
+  }
+
+  # Store the ca value in the variable
+  ca_value=$(<"${NEXT_PUBLIC_SELF_SIGNED_CA_PATH}")
+  echo "ca: $ca_value"
+
+  echo "NEXT_PUBLIC_SELF_SIGNED_CA: \`${ca_value}\`" >>"$ENVSH_OUTPUT"
+fi
 
 # Add append
 $ENVSH_CREATE_ENVJS && echo "$ENVSH_APPEND" >>"$ENVSH_OUTPUT"
@@ -140,28 +170,28 @@ $ENVSH_CREATE_ENVJS && $ENVSH_PREFIX_STRIP && $ENVSH_SED -i'' -e "s~$ENVSH_PREFI
 
 __info "$(__green "\nReplacing env variable in ${ENVSH_ENV}...\n")"
 
-# Replace environment variables in .env file
-for i in "${!matched_envs_arr[@]}"; do
-  IFS='=' read -ra key_arr <<<"${matched_envs_arr[$i]}"
-  key=${key_arr[0]}
+# # Replace environment variables in .env file
+# for i in "${!matched_envs_arr[@]}"; do
+#   IFS='=' read -ra key_arr <<<"${matched_envs_arr[$i]}"
+#   key=${key_arr[0]}
 
-  if [[ "${matched_envs_arr[$i]}" = *"${key}"* ]]; then
-    index="$i"
+#   if [[ "${matched_envs_arr[$i]}" = *"${key}"* ]]; then
+#     index="$i"
 
-    # Use temp file to avoid sed permission issue
-    rm -f .env.tmp
-    TFILE=$(mktemp)
+#     # Use temp file to avoid sed permission issue
+#     rm -f .env.tmp
+#     TFILE=$(mktemp)
 
-    echo -e "Got index from inline env: ${index}, replacing ${key}"
+#     echo -e "Got index from inline env: ${index}, replacing ${key}"
 
-    # Replace the value and then store into temp file
-    $ENVSH_SED -e "s~$key=.*~${matched_envs_arr[$index]}~g" "$ENVSH_ENV" >"$TFILE"
+#     # Replace the value and then store into temp file
+#     $ENVSH_SED -e "s~$key=.*~${matched_envs_arr[$index]}~g" "$ENVSH_ENV" >"$TFILE"
 
-    # cover .env file then delete the temp file
-    cat "$TFILE" >"$ENVSH_ENV"
-    rm -f .env.tmp
-  fi
-done
+#     # cover .env file then delete the temp file
+#     cat "$TFILE" >"$ENVSH_ENV"
+#     rm -f .env.tmp
+#   fi
+# done
 
 # Print result
 __debug "$(__green "\nDone! Final result in ${ENVSH_OUTPUT}:\n")"
