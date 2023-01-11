@@ -98,7 +98,8 @@ For server-side code, because we will alter the ./.env file in the image. It can
 
 ## Security
 
-- We currently use self-signed certification in all our backend so the default of env variable `NEXT_PUBLIC_INTEGRATION_TEST_ENABLED` will be true. Which means that the Axios won't complaint the `Unauthorized` request. Please do not set this env variable to true on production. 
+- We currently use self-signed certification in all our backend so the default of env variable `NEXT_PUBLIC_INTEGRATION_TEST_ENABLED` will be true. Which means that the Axios won't complaint the `Unauthorized` request. Please do not set this env variable to true on production.
+- We will exposed the self-signed certification into `/public` folder to fascilitate the development process. You can disable this feature with `NEXT_PUBLIC_SELF_SIGNED_CERTIFICATION=false` 
 
 ## About the test container
 
