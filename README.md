@@ -1,5 +1,7 @@
 # Versatile Data Pipeline (VDP) console
 
+This is a archived branch. To store the way to bundle the self-signed ca into __env.js file and digest it in the browser.
+
 ## About VDP Console
 
 The VDP console is written in Nextjs, Typescript, TailwindCSS and it runs a docker container with the VDP backend. Interested in trying it out? Check out [here](https://github.com/instill-ai/vdp) to run it locally.
