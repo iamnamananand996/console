@@ -122,15 +122,24 @@ $ENVSH_CREATE_ENVJS && echo "$ENVSH_PREPEND" >>"$ENVSH_OUTPUT"
 # Process .env for runtime client use
 __info "$(__green "\nParsing ${ENVSH_ENV}...\n")"
 
+env_file_ca_path=""
+
 while IFS= read -r line; do
   # Check if this line is a valid environment variable and matches our prefix
   if printf '%s' "$line" | grep -e "=" | grep -e "$ENVSH_PREFIX"; then
 
     # get the env name
     env_name=$(echo "$line" | cut -d "=" -f 1)
+    env_value=$(echo "$line" | cut -d "=" -f 2)
+
+    # Retrieve ca path in .env file
+    if [[ $env_name = "NEXT_PUBLIC_SELF_SIGNED_CA_PATH" ]]; then
+      env_file_ca_path=$env_value
+    fi
 
     # NEXT_PUBLIC_SELF_SIGNED_CA env will be reserved for below action
     if [[ $env_name != "NEXT_PUBLIC_SELF_SIGNED_CA" ]]; then
+
       # Read and apply environment variable if exists
       # NOTE: <<< here operator not working with `sh`
       $ENVSH_CREATE_ENVJS && awk -F '=' '{print $1 ": \"" (ENVIRON[$1] ? ENVIRON[$1] : $2) "\","}' \
@@ -144,20 +153,28 @@ done <"$ENVSH_ENV"
 # add certification into __env file
 # The inlined env had already replace the ./env file so we can safely retrieve this env
 # here (But we still need to replace the var in .env below.)
-
 if [[ $NEXT_PUBLIC_SELF_SIGNED_CA_ENABLED = true ]]; then
 
   __info "$(__green "\nParsing CA...\n")"
 
   # Check if ca path exists
-  [[ -f "$NEXT_PUBLIC_SELF_SIGNED_CA_PATH" ]] || {
-    echo "NEXT_PUBLIC_SELF_SIGNED_CA_PATH does not exist"
-    exit 1
-  }
+  if [[ -z "$NEXT_PUBLIC_SELF_SIGNED_CA_PATH" && -z "$env_file_ca_path" ]]; then
+    {
+      __info "$(__red "\nNEXT_PUBLIC_SELF_SIGNED_CA_PATH does not exist\n")"
+      exit 1
+    }
+  fi
 
-  # Store the ca value in the variable
-  ca_value=$(<"${NEXT_PUBLIC_SELF_SIGNED_CA_PATH}")
-  echo "ca: $ca_value"
+  ca_value=""
+
+  # First of all, we check whether the inlined ca_path exist or not, if it doesn't
+  # exist we use the cap_path in the .env file
+  if [[ -z "$NEXT_PUBLIC_SELF_SIGNED_CA_PATH" ]]; then
+    ca_value=$(<"${env_file_ca_path}")
+  else
+    echo "ca_path: $NEXT_PUBLIC_SELF_SIGNED_CA_PATH"
+    ca_value=$(<"${NEXT_PUBLIC_SELF_SIGNED_CA_PATH}")
+  fi
 
   echo "NEXT_PUBLIC_SELF_SIGNED_CA: \`${ca_value}\`" >>"$ENVSH_OUTPUT"
 fi
