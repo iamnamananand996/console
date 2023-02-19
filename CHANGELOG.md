@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.17.0-alpha](https://github.com/instill-ai/console/compare/v0.16.0-alpha...v0.17.0-alpha) (2023-02-19)
+
+
+### Features
+
+* add health endpoint ([#341](https://github.com/instill-ai/console/issues/341)) ([488ef16](https://github.com/instill-ai/console/commit/488ef165459d30474bd2cee65eec0417b0feb2c3))
+* expose node env as build args ([#345](https://github.com/instill-ai/console/issues/345)) ([9a82499](https://github.com/instill-ai/console/commit/9a824997b82f32b1bb68756ed2a64f878f33b092))
+* further delay the model details test ([bb0e955](https://github.com/instill-ai/console/commit/bb0e955a25ce6d9a18f549f1e7e35a79379a5763))
+* implement new pipeline snippet ([#346](https://github.com/instill-ai/console/issues/346)) ([01c8c41](https://github.com/instill-ai/console/commit/01c8c41784208678fb102a9b15c0af3a115e6784))
+* update model task label ([#347](https://github.com/instill-ai/console/issues/347)) ([bb317f1](https://github.com/instill-ai/console/commit/bb317f14ea22609a6e1081c82a93d3eeddbd9354))
+
+
+### Bug Fixes
+
+* fix env file ([#349](https://github.com/instill-ai/console/issues/349)) ([b8ff7aa](https://github.com/instill-ai/console/commit/b8ff7aaa2dc2b2fc7abd4621615f0f3ae0a76ce6))
+* fix env issue ([#348](https://github.com/instill-ai/console/issues/348)) ([f2e6126](https://github.com/instill-ai/console/commit/f2e6126bf054cbd5165d1bc4457f40083a0a6d58))
+* fix wrong env name ([#350](https://github.com/instill-ai/console/issues/350)) ([30f5308](https://github.com/instill-ai/console/commit/30f53086e8d4f34ed1ed7bce9a8bdc6e77402a89))
+
 ## [0.16.0-alpha](https://github.com/instill-ai/console/compare/v0.15.0-alpha...v0.16.0-alpha) (2023-02-10)
 
 
